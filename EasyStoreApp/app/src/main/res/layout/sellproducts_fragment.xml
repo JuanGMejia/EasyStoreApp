@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:text="scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="49dp"
+        android:id="@+id/scan_button" />
+
+    <TextView
+        android:text="scan_format"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/scan_button"
+        android:layout_alignStart="@+id/scan_button"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="24dp"
+        android:id="@+id/scan_format" />
+
+    <TextView
+        android:text="scan_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scan_format"
+        android:layout_toRightOf="@+id/scan_button"
+        android:layout_toEndOf="@+id/scan_button"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:id="@+id/scan_content" />
+
+    <TextView
+        android:text="scan_raw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scan_raw"
+        android:layout_alignBaseline="@+id/scan_button"
+        android:layout_alignBottom="@+id/scan_button"
+        android:layout_alignLeft="@+id/scan_content"
+        android:layout_alignStart="@+id/scan_content" />
+</LinearLayout>

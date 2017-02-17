@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "952362288548",
+    "firebase_url": "https://easystoreapp-84625.firebaseio.com",
+    "project_id": "easystoreapp-84625",
+    "storage_bucket": "easystoreapp-84625.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:952362288548:android:53212ff57b53f50d",
+        "android_client_info": {
+          "package_name": "com.example.juangui.easystoreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "952362288548-5v834hofa9fg3r1j08rjvp5dbbv6ppjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF33ULPoDUgfZsLyB0OC5TI30_FCFZa_Q"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "952362288548-5v834hofa9fg3r1j08rjvp5dbbv6ppjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
