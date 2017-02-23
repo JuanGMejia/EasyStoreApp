@@ -71,6 +71,8 @@ public class HomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            default:
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -125,6 +127,8 @@ public class HomeActivity extends AppCompatActivity {
                                 Toast.makeText(HomeActivity.this, menuItem.getTitle().toString(), Toast.LENGTH_SHORT).show();
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
+                            default:
+                                break;
                         }
                         return true;
                     }

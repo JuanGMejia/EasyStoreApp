@@ -8,15 +8,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 /**
  * Created by Juan Gui on 10/02/2017.
  */
 public class CustomGrid extends BaseAdapter{
     private Context mContext;
-    private final String[] web;
-    private final int[] Imageid;
 
-    public CustomGrid(Context c,String[] web,int[] Imageid ) {
+    private ArrayList<String> web = new ArrayList<String>();
+    private ArrayList<Integer> Imageid = new ArrayList<>();
+
+    public CustomGrid(Context c, ArrayList web, ArrayList Imageid ) {
         mContext = c;
         this.Imageid = Imageid;
         this.web = web;
@@ -25,7 +28,7 @@ public class CustomGrid extends BaseAdapter{
     @Override
     public int getCount() {
         // TODO Auto-generated method stub
-        return web.length;
+        return web.size();
     }
 
     @Override
@@ -53,8 +56,8 @@ public class CustomGrid extends BaseAdapter{
             grid = inflater.inflate(R.layout.grid_single, null);
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
             ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
-            textView.setText(web[position]);
-            imageView.setImageResource(Imageid[position]);
+            textView.setText(web.get(position));
+            imageView.setImageResource(Imageid.get(position));
         } else {
             grid = (View) convertView;
         }

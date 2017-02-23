@@ -7,13 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
+import java.util.ArrayList;
 
 /**
  * Created by Juan Gui on 16/02/2017.
@@ -22,20 +19,18 @@ import com.google.zxing.integration.android.IntentResult;
 public class ListProducts extends Fragment{
     View rootView;
     GridView grid;
-    String[] name = {
-            "Leche Colanta",
-            "Leche Alqueria"
-    } ;
-    int[] imageId = {
-            R.drawable.lechecolanta,
-            R.drawable.lechealqueria
-    };
+    ArrayList<String> name = new ArrayList<String>();
+    ArrayList<Integer> imageId = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.listproducts_fragment,container,false);
         super.onCreate(savedInstanceState);
-
+        imageId.add(R.drawable.lechealqueria);
+        imageId.add(R.drawable.add);
+        name.add("Leche Alqueria");
+        name.add("");
         CustomGrid adapter = new CustomGrid(rootView.getContext(), name, imageId);
         grid=(GridView)rootView.findViewById(R.id.grid);
         grid.setAdapter(adapter);
@@ -44,7 +39,10 @@ public class ListProducts extends Fragment{
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Toast.makeText(rootView.getContext(), "You Clicked at " +name[+ position], Toast.LENGTH_SHORT).show();
+                if(position==imageId.size()-1){
+                    lanzarAddProduct(rootView);
+                }
+                Toast.makeText(rootView.getContext(), "You Clicked at " +name.get(position), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -53,6 +51,9 @@ public class ListProducts extends Fragment{
     }
 
 
-
+    public void lanzarAddProduct(View v){
+        Intent iniciarAddProduct= new Intent(v.getContext(),AddProduct.class);
+        startActivity(iniciarAddProduct);
+    }
 
 }
