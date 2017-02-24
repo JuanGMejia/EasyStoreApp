@@ -1,7 +1,8 @@
-package com.example.juangui.easystoreapp;
+package com.example.juangui.easystoreapp.tests;
 
 import android.util.Log;
 
+import com.example.juangui.easystoreapp.Producto;
 import com.google.firebase.database.FirebaseDatabase;
 
 import org.junit.Assert;
