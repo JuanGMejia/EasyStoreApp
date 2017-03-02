@@ -8,6 +8,7 @@ android:
     - platform-tools
     - build-tools-25.0.2
     - android-25
+    - extra
 
 script:
    - ./gradlew build connectedCheck
