@@ -19,6 +19,16 @@ public class Producto {
 
     }
 
+    public Producto(String codigoBarras, String categoria, String nombre, String cantidad, String precioCompra, String precioVenta, String fechaVencimiento) {
+        this.codigoBarras = codigoBarras;
+        this.categoria = categoria;
+        this.nombre = nombre;
+        this.cantidad = cantidad;
+        this.precioCompra = precioCompra;
+        this.precioVenta = precioVenta;
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
     public String getCodigoBarras() {
         return codigoBarras;
     }

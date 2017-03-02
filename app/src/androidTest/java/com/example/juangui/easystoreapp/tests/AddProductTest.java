@@ -20,10 +20,9 @@ import static org.junit.Assert.*;
  */
 public class AddProductTest {
     FirebaseDatabase fb;
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    Date d = sdf.parse("21/12/2012");
-    private Producto productobueno=new Producto("1023","Lacteos","2","leche","3100","3500",d);
-    private Producto productomalo=new Producto("","Lacteos","","","3100","3500",d);
+
+    private Producto productobueno=new Producto("101","Lacteos","leche","2","3100","3500","21/12/2012");
+    private Producto productomalo=new Producto("101","","leche","2","3100","","21/12/2012");
 
     public AddProductTest() throws ParseException {
 
