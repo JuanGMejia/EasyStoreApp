@@ -1,39 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ToolbarTheme" />
+
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         app:srcCompat="@drawable/default_product"
         android:id="@+id/imageViewFotoProd"
-        android:layout_weight="0.28" />
+        android:layout_below="@+id/toolbar"
+        />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/edit"
         android:id="@+id/imageButtonEdit"
-        android:gravity="right"
-        android:adjustViewBounds="true" />
+        android:layout_gravity="right"
+        android:layout_alignEnd="@+id/imageViewFotoProd"
+        android:layout_below="@+id/imageViewFotoProd"
+        />
 
-    <TextView
-        android:text="Nombre del producto"
+
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textViewNameProduct"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/editTextNombreProd"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:background="@drawable/backwithborder"
+        android:layout_below="@+id/imageButtonEdit"
+        android:hint="Nombre del producto"
+        android:textColorHint="#999"/>
+
+
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNombreProd"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginTop="13dp"
+        android:id="@+id/spinnerCatProd" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Precio venta del producto"
+        android:textColorHint="#999"
+        android:ems="10"
+        android:id="@+id/editTextPrecioVentProd"
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:gravity="center"
+        android:background="@drawable/backwithborder"
+        android:layout_below="@+id/btnAgregar"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Precio compra del producto"
+        android:textColorHint="#999"
+        android:ems="10"
+        android:id="@+id/editTextPrecioCompProd"
         android:layout_weight="0.28"
         android:gravity="center"
-        />
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:background="@drawable/backwithborder"
+        android:layout_below="@+id/editTextPrecioVentProd"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:inputType="numberDecimal" />
+
+    <Button
+        android:text="Codigo de Barras"
+        android:layout_width="155dip"
+        android:layout_height="wrap_content"
+        android:id="@+id/scan_button"
+        android:layout_weight="0.28"
+        android:layout_below="@+id/editTextPrecioCompProd" />
+
+    <TextView
+        android:text="#########"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewCodigoBarras"
+        android:layout_weight="0.28"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:background="@drawable/backwithborder"
+        android:layout_alignBaseline="@+id/scan_button"
+        android:layout_alignBottom="@+id/scan_button"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/scan_button"
+        android:layout_toEndOf="@+id/scan_button" />
+
+    <Button
+        android:id="@+id/btnCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_button"
+        android:text="Fecha Vencimiento" />
+
+    <TextView
+        android:text="Valor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewfechaVenc"
+        android:layout_weight="0.28"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:background="@drawable/backwithborder"
+        android:layout_alignBaseline="@+id/btnCalendar"
+        android:layout_alignBottom="@+id/btnCalendar"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/btnCalendar"
+        android:layout_toEndOf="@+id/btnCalendar" />
 
     <Button
         android:text="Agregar"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/buttonAddProduct"
+        android:layout_below="@+id/btnCalendar"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:text="Cantidad"
+        android:layout_height="wrap_content"
+        android:layout_width="155dp"
+        android:layout_weight="0.28"
         android:gravity="center"
-        android:layout_weight="0.28" />
-</LinearLayout>
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:background="@drawable/backwithborder"
+        android:id="@+id/textView2"
+        android:layout_below="@+id/spinnerCatProd"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:text="0"
+        android:textColorHint="#999"
+        android:ems="2"
+        android:id="@+id/numberCantidadProd"
+        android:textStyle="bold"
+        android:textColor="#999"
+        android:gravity="center"
+        android:background="@drawable/backwithborder"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toRightOf="@+id/buttonAddProduct"
+        android:layout_toEndOf="@+id/buttonAddProduct" />
+
+    <Button
+        android:text="-"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btnDisminuir"
+        android:layout_weight="0.28"
+        android:layout_alignBottom="@+id/numberCantidadProd"
+        android:layout_alignRight="@+id/buttonAddProduct"
+        android:layout_alignEnd="@+id/buttonAddProduct"
+        android:layout_alignTop="@+id/btnAgregar" />
+
+    <Button
+        android:text="+"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/btnAgregar"
+        android:layout_weight="0.28"
+        android:layout_alignLeft="@+id/imageButtonEdit"
+        android:layout_alignStart="@+id/imageButtonEdit"
+        android:layout_alignBottom="@+id/numberCantidadProd"
+        android:layout_alignTop="@+id/spinnerCatProd" />
+
+
+</RelativeLayout>

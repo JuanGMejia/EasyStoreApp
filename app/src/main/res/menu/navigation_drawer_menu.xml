@@ -4,19 +4,19 @@
     <group android:checkableBehavior="single">
         <item
             android:checked="true"
-            android:id="@+id/item_navigation_drawer_product"
+            android:id="@+id/item_agregar_producto"
             android:icon="@drawable/ic_inbox_black_24dp"
             android:title="Mis Productos" />
         <item
-            android:id="@+id/item_navigation_drawer_starred"
+            android:id="@+id/item_comprar_producto"
             android:icon="@drawable/ic_action_toggle_star"
             android:title="Compras" />
         <item
-            android:id="@+id/item_navigation_drawer_sent_mail"
+            android:id="@+id/item_vender_producto"
             android:icon="@drawable/ic_action_content_send"
             android:title="Ventas" />
         <item
-            android:id="@+id/item_navigation_drawer_drafts"
+            android:id="@+id/item_estadisticas"
             android:icon="@drawable/ic_action_content_drafts"
             android:title="Estadisticas" />
     </group>

@@ -11,6 +11,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +20,19 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 public class HomeActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
     Toolbar toolbar;
     ActionBar actionBar;
     TextView textView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
         transaction.commit();
 
 
+
     }
 
     @Override
@@ -84,32 +92,22 @@ public class HomeActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         textView = (TextView) findViewById(R.id.textView);
                         switch (menuItem.getItemId()) {
-                            case R.id.item_navigation_drawer_product:
+                            case R.id.item_agregar_producto:
                                 menuItem.setChecked(true);
-                                Fragment newFragment = new ListProducts();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction transaction = fragmentManager.beginTransaction();
-                                transaction.replace(R.id.fragment_container, newFragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
+                                iniciarAddProduct();
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
-                            case R.id.item_navigation_drawer_starred:
+                            case R.id.item_vender_producto:
                                 menuItem.setChecked(true);
-                                Fragment sellfragment = new SellProducts();
-                                FragmentManager fragmentManagerSell = getFragmentManager();
-                                FragmentTransaction transactionSell = fragmentManagerSell.beginTransaction();
-                                transactionSell.replace(R.id.fragment_container, sellfragment);
-                                transactionSell.addToBackStack(null);
-                                transactionSell.commit();
+                                iniciarSellProducts();
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
-                            case R.id.item_navigation_drawer_sent_mail:
+                            case R.id.item_comprar_producto:
                                 menuItem.setChecked(true);
                                 textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
-                            case R.id.item_navigation_drawer_drafts:
+                            case R.id.item_estadisticas:
                                 menuItem.setChecked(true);
                                 textView.setText(menuItem.getTitle());
                                 drawerLayout.closeDrawer(GravityCompat.START);
@@ -133,5 +131,23 @@ public class HomeActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    public void iniciarAddProduct(){
+        Fragment newFragment = new ListProducts();
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    public void iniciarSellProducts(){
+        Fragment sellfragment = new SellProducts();
+        FragmentManager fragmentManagerSell = getFragmentManager();
+        FragmentTransaction transactionSell = fragmentManagerSell.beginTransaction();
+        transactionSell.replace(R.id.fragment_container, sellfragment);
+        transactionSell.addToBackStack(null);
+        transactionSell.commit();
     }
 }
