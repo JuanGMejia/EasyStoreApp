@@ -43,6 +43,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -122,6 +123,8 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         codigoBarrasProducto = (TextView) findViewById(R.id.textViewCodigoBarras);
         fechaVencimiento = (TextView) findViewById(R.id.textViewfechaVenc);
         final Button btnOpenPopup = (Button) findViewById(R.id.btnCalendar);
+        producto = new Producto();
+
         btnOpenPopup.setOnClickListener(this);
 
         //Se inician las variables para escanear el codigo de barras del producto
@@ -196,8 +199,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                 asignarValoresProducto();
                 if(producto.verificarCampos()){
                     //guardarImagen();
-
-                    Toast.makeText(AddProduct.this,"Se guarda imagen",Toast.LENGTH_LONG).show();
+                    Toast.makeText(AddProduct.this,"Producto agregado!",Toast.LENGTH_LONG).show();
                 }
                 else{
                     Toast.makeText(AddProduct.this,"Faltan campos por llenar",Toast.LENGTH_LONG).show();
@@ -232,10 +234,13 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     }
 
     public void asignarValoresProducto(){
+        Log.d("Valor------------->",nombreProducto.getText().toString().trim());
         producto.setNombre(nombreProducto.getText().toString().trim());
-        producto.setCantidad((String.valueOf(cantidadProducto.getText().toString())).trim());
+        producto.setCantidad(cantidadProducto.getText().toString().trim());
         producto.setPrecioCompra(precioCompraProducto.getText().toString().trim());
         producto.setPrecioVenta(precioVentaProducto.getText().toString().trim());
+        producto.setCodigoBarras(codigoBarrasProducto.getText().toString().trim());
+        producto.setFechaVencimiento(fechaVencimiento.getText().toString().trim());
     }
 
     public void tomarFoto(){

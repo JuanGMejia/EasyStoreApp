@@ -39,6 +39,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
+        android:text=""
         android:id="@+id/editTextNombreProd"
         android:gravity="center"
         android:textStyle="bold"
@@ -67,6 +68,7 @@
         android:hint="Precio venta del producto"
         android:textColorHint="#999"
         android:ems="10"
+        android:text=""
         android:id="@+id/editTextPrecioVentProd"
         android:textStyle="bold"
         android:textColor="#999"
@@ -80,6 +82,7 @@
         android:hint="Precio compra del producto"
         android:textColorHint="#999"
         android:ems="10"
+        android:text=""
         android:id="@+id/editTextPrecioCompProd"
         android:layout_weight="0.28"
         android:gravity="center"
@@ -124,7 +127,7 @@
         android:text="Fecha Vencimiento" />
 
     <TextView
-        android:text="Valor"
+        android:text=""
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textViewfechaVenc"

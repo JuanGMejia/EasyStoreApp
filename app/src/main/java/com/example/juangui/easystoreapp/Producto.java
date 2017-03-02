@@ -10,22 +10,13 @@ public class Producto {
     private String codigoBarras;
     private String categoria;
     private String nombre;
-
-
-
     private String cantidad;
     private String precioCompra;
     private String precioVenta;
-    private Date fechaVencimiento;
+    private String fechaVencimiento;
 
-    public Producto(String codigoBarras, String categoria, String nombre, String cantidad, String precioCompra, String precioVenta, Date fechaVencimiento) {
-        this.codigoBarras = codigoBarras;
-        this.categoria = categoria;
-        this.nombre = nombre;
-        this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
-        this.precioVenta = precioVenta;
-        this.fechaVencimiento = fechaVencimiento;
+    public Producto(){
+
     }
 
     public String getCodigoBarras() {
@@ -76,16 +67,16 @@ public class Producto {
         this.precioVenta = precioVenta;
     }
 
-    public Date getFechaVencimiento() {
+    public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(Date fechaVencimiento) {
+    public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
     public boolean verificarCampos(){
-        if(!this.codigoBarras.equals("") && !this.nombre.equals("") && !this.categoria.equals("") && !this.precioCompra.equals("")
+        if(!this.codigoBarras.equals("#########") && !this.nombre.equals("") && !this.categoria.equals("") && !this.precioCompra.equals("")
                 && !this.precioVenta.equals("") && !this.fechaVencimiento.equals("")){
             return true;
         }else {
