@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.CheckableImageButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -37,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
@@ -53,7 +57,7 @@ import static java.security.AccessController.getContext;
  * Created by Juan Gui on 21/02/2017.
  */
 
-public class AddProduct extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemSelectedListener{
+public class AddProduct extends AppCompatActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
     //Variables fecha de vencimiento
     DatePickerFragment DPF;
     private TextView fechaVencimiento;
@@ -64,20 +68,19 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     private byte[] datas;
     private Bitmap temporal;
     //Variables de base de datos
-    FBConnection fb=new FBConnection();
+    FBConnection fb = new FBConnection();
     private HashMap categorias;
 
     //Variables del layout
-    private Button agregarProducto;
-    private ImageButton editarFoto;
-    private ImageView fotoProducto;
+    private CheckableImageButton agregarProducto;
     private EditText nombreProducto;
-    private Button scanBtn;
-    private Spinner categoriaProducto;
-    private EditText precioCompraProducto;
+    private CheckableImageButton scanBtn;
+    private MaterialBetterSpinner categoriaProducto;
     private EditText precioVentaProducto;
+    private EditText precioCompraProducto;
     private TextView codigoBarrasProducto;
     private EditText cantidadProducto;
+
     private Button agregarCantidad;
     private Button disminuirCantidad;
     private Integer cantidad;
@@ -93,44 +96,41 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     private String codigoBarras;
 
     //Switch de resultado scan o foto
-    boolean scan=false;
+    boolean scan = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product);
+        context=this;
+        final ProgressDialog progress = ProgressDialog.show(AddProduct.this, "Cargando",
+                "Espera un momento...", true);
 
         //Variables de fecha de vencimiento
         context = this;
         DPF=new DatePickerFragment();
 
         //inicialización variables del layout
-        fotoProducto =(ImageView) findViewById(R.id.imageViewFotoProd);
-        agregarProducto = (Button) findViewById(R.id.buttonAddProduct);
+        agregarProducto =(CheckableImageButton) findViewById(R.id.imagenProducto);
         agregarProducto.setOnClickListener(this);
-        editarFoto =(ImageButton) findViewById(R.id.imageButtonEdit);
-        editarFoto.setOnClickListener(this);
         nombreProducto =(EditText) findViewById(R.id.editTextNombreProd);
-        categoriaProducto = (Spinner) findViewById(R.id.spinnerCatProd);
-        cantidadProducto = (EditText) findViewById(R.id.numberCantidadProd);
-        disminuirCantidad =(Button) findViewById(R.id.btnDisminuir);
-        disminuirCantidad.setOnClickListener(this);
-        agregarCantidad =(Button) findViewById(R.id.btnAgregar);
-        agregarCantidad.setOnClickListener(this);
-        precioCompraProducto = (EditText) findViewById(R.id.editTextPrecioCompProd);
-        precioVentaProducto = (EditText) findViewById(R.id.editTextPrecioVentProd);
-        codigoBarrasProducto = (TextView) findViewById(R.id.textViewCodigoBarras);
-        fechaVencimiento = (TextView) findViewById(R.id.textViewfechaVenc);
-        final Button btnOpenPopup = (Button) findViewById(R.id.btnCalendar);
+        categoriaProducto = (MaterialBetterSpinner) findViewById(R.id.spinnerCatProd);
         producto = new Producto();
-
-        btnOpenPopup.setOnClickListener(this);
+        precioVentaProducto = (EditText) findViewById(R.id.editTextPrecioVentProd);
+        precioCompraProducto = (EditText) findViewById(R.id.editTextPrecioCompProd);
+        cantidadProducto = (EditText) findViewById(R.id.numberCantidadProd);
+        codigoBarrasProducto = (TextView) findViewById(R.id.textViewCodigoBarras);
 
         //Se inician las variables para escanear el codigo de barras del producto
         scanProductBarCode=new ScanProductBarCode(this);
-        scanBtn = (Button) findViewById(R.id.scan_button);
+        scanBtn = (CheckableImageButton) findViewById(R.id.scan_button);
         scanBtn.setOnClickListener(this);
+
+        fechaVencimiento = (TextView) findViewById(R.id.textViewFechaVenc);
+        final CheckableImageButton btnOpenPopup = (CheckableImageButton) findViewById(R.id.btnCalendar);
+
+        btnOpenPopup.setOnClickListener(this);
 
         //Se obtienen las categorias de la Firebase
         fb.getDatabase("EasyStore");
@@ -140,13 +140,12 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                 categoriasArray=new ArrayList<String>();
                 categorias = (HashMap) dataSnapshot.child("Categorias").getValue();
                 categoriasObject = categorias.keySet().toArray();
-                categoriasArray.add("Seleccionar Categoria");
                 for(int i=0;i<categorias.size();i++){
                     categoriasArray.add(categoriasObject[i].toString());
                 }
                 adaptador =new ArrayAdapter<String>(AddProduct.this,android.R.layout.simple_spinner_item,categoriasArray);
                 categoriaProducto.setAdapter(adaptador);
-
+                progress.dismiss();
             }
 
             @Override
@@ -154,13 +153,29 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
             }
         });
-        categoriaProducto.setOnItemSelectedListener(this);
 
+        categoriaProducto.setOnItemClickListener(this);
+
+
+        /*
+
+
+        disminuirCantidad =(Button) findViewById(R.id.btnDisminuir);
+        disminuirCantidad.setOnClickListener(this);
+        agregarCantidad =(Button) findViewById(R.id.btnAgregar);
+        agregarCantidad.setOnClickListener(this);
+
+
+
+
+
+
+
+        */
     }
 
     @Override
     public void onActivityResult(int requestCode,int resultCode, Intent data) {
-
         if(scan){
             IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (scanningResult != null) {
@@ -184,7 +199,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 bmp.compress(Bitmap.CompressFormat.JPEG,100,baos);
                 datas = baos.toByteArray();
-                fotoProducto.setImageBitmap(temporal);
+                agregarProducto.setImageBitmap(temporal);
             }
         }
 
@@ -194,7 +209,22 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
+
         switch(v.getId()){
+            case R.id.imagenProducto:
+                scan=false;
+                tomarFoto();
+                break;
+
+            case R.id.scan_button:
+                scan=true;
+                scanProductBarCode.iniciarScanner();
+                break;
+
+            case R.id.btnCalendar:
+                showDatePickerDialog(v);
+                break;
+            /*
             case R.id.buttonAddProduct:
                 asignarValoresProducto();
                 if(producto.verificarCampos()){
@@ -205,17 +235,8 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                     Toast.makeText(AddProduct.this,"Faltan campos por llenar",Toast.LENGTH_LONG).show();
                 }
                 break;
-            case R.id.imageButtonEdit:
-                scan=false;
-                tomarFoto();
-                break;
-            case R.id.scan_button:
-                scan=true;
-                scanProductBarCode.iniciarScanner();
-                break;
-            case R.id.btnCalendar:
-                showDatePickerDialog(v);
-                break;
+
+
             case R.id.btnDisminuir:
                 cantidad=Integer.parseInt(cantidadProducto.getText().toString());
                 if(cantidad>0){
@@ -228,13 +249,13 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
                 cantidad+=1;
                 cantidadProducto.setText(cantidad.toString());
                 break;
+            */
             default:
                 break;
         }
     }
 
     public void asignarValoresProducto(){
-        Log.d("Valor------------->",nombreProducto.getText().toString().trim());
         producto.setNombre(nombreProducto.getText().toString().trim());
         producto.setCantidad(cantidadProducto.getText().toString().trim());
         producto.setPrecioCompra(precioCompraProducto.getText().toString().trim());
@@ -269,22 +290,6 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        switch (view.getId()) {
-            case R.id.spinnerCatProd:
-                if(categoriaProducto.getId()>0){
-                    producto.setCategoria(String.valueOf(categoriaProducto.getSelectedItem()).trim());
-                }
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 
     public void showDatePickerDialog(View v) {
         DPF.setFechaVencimiento(fechaVencimiento);
@@ -292,4 +297,10 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         newFragment.show(context.getFragmentManager(), "datePicker");
     }
 
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        producto.setCategoria(categoriaProducto.getAdapter().getItem(position).toString());
+    }
 }
