@@ -80,10 +80,8 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     private EditText precioCompraProducto;
     private TextView codigoBarrasProducto;
     private EditText cantidadProducto;
+    private Button agregar;
 
-    private Button agregarCantidad;
-    private Button disminuirCantidad;
-    private Integer cantidad;
 
     //Variable para el produto
     private Producto producto;
@@ -107,6 +105,9 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         final ProgressDialog progress = ProgressDialog.show(AddProduct.this, "Cargando",
                 "Espera un momento...", true);
 
+        //Inicializa la variable de base de datos
+        fb.getDatabase("EasyStore");
+
         //Variables de fecha de vencimiento
         context = this;
         DPF=new DatePickerFragment();
@@ -121,6 +122,8 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         precioCompraProducto = (EditText) findViewById(R.id.editTextPrecioCompProd);
         cantidadProducto = (EditText) findViewById(R.id.numberCantidadProd);
         codigoBarrasProducto = (TextView) findViewById(R.id.textViewCodigoBarras);
+        agregar = (Button) findViewById(R.id.buttonAddProduct);
+        agregar.setOnClickListener(this);
 
         //Se inician las variables para escanear el codigo de barras del producto
         scanProductBarCode=new ScanProductBarCode(this);
@@ -133,7 +136,7 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         btnOpenPopup.setOnClickListener(this);
 
         //Se obtienen las categorias de la Firebase
-        fb.getDatabase("EasyStore");
+
         fb.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -156,22 +159,6 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
 
         categoriaProducto.setOnItemClickListener(this);
 
-
-        /*
-
-
-        disminuirCantidad =(Button) findViewById(R.id.btnDisminuir);
-        disminuirCantidad.setOnClickListener(this);
-        agregarCantidad =(Button) findViewById(R.id.btnAgregar);
-        agregarCantidad.setOnClickListener(this);
-
-
-
-
-
-
-
-        */
     }
 
     @Override
@@ -224,32 +211,17 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
             case R.id.btnCalendar:
                 showDatePickerDialog(v);
                 break;
-            /*
+
             case R.id.buttonAddProduct:
                 asignarValoresProducto();
                 if(producto.verificarCampos()){
-                    //guardarImagen();
-                    Toast.makeText(AddProduct.this,"Producto agregado!",Toast.LENGTH_LONG).show();
+                    guardarImagen();
                 }
                 else{
                     Toast.makeText(AddProduct.this,"Faltan campos por llenar",Toast.LENGTH_LONG).show();
                 }
                 break;
 
-
-            case R.id.btnDisminuir:
-                cantidad=Integer.parseInt(cantidadProducto.getText().toString());
-                if(cantidad>0){
-                    cantidad-=1;
-                    cantidadProducto.setText(cantidad.toString());
-                }
-                break;
-            case R.id.btnAgregar:
-                cantidad=Integer.parseInt(cantidadProducto.getText().toString());
-                cantidad+=1;
-                cantidadProducto.setText(cantidad.toString());
-                break;
-            */
             default:
                 break;
         }
@@ -269,26 +241,31 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         Intent tomarImagen= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(tomarImagen,cons);
     }
-/*
+
     public void guardarImagen(){
 
-        UploadTask uploadTask = connection.getStorage().getReference().child("Images/").child(nombreProducto.getText().toString()+"/").child("Perfil.jpg").putBytes(datas);
+        UploadTask uploadTask = fb.getStorage().getReference().child("Images/").child(nombreProducto.getText().toString()+"/").child("Foto.jpg").putBytes(datas);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-
+                Toast.makeText(AddProduct.this,"Fallo al intentar agregar el producto",Toast.LENGTH_LONG).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AddProduct.this,"Produto Agregado",Toast.LENGTH_LONG).show();
+                fb.getDatabase("EasyStore");
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("Cantidad").setValue(producto.getCantidad());
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("Categoria").setValue(producto.getCategoria());
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("Nombre").setValue(producto.getNombre());
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("PrecioC").setValue(producto.getPrecioCompra());
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("PrecioV").setValue(producto.getPrecioVenta());
+                fb.myRef.child("Productos").child(producto.getCodigoBarras()).child("FechaV").setValue(producto.getFechaVencimiento());
+                finish();
             }
         });
 
-    }*/
-
-
+    }
 
 
     public void showDatePickerDialog(View v) {
@@ -296,8 +273,6 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
         DialogFragment newFragment = DPF;
         newFragment.show(context.getFragmentManager(), "datePicker");
     }
-
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
