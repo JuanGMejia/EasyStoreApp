@@ -16,14 +16,15 @@
         android:elevation="4dp"
         android:theme="@style/ToolbarTheme"
         android:gravity="bottom">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agregar Producto"
-        android:textSize="20dp"
-        android:textColor="#FFFFFF"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="bottom"
+            android:text="@string/add_product"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp" />
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView
@@ -32,153 +33,212 @@
         android:layout_below="@+id/toolbar">
 
 
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/layoutEditar">
-
-            <android.support.design.widget.CheckableImageButton
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/default_product"
-                android:id="@+id/imagenProducto"/>
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:weightSum="0.3">
 
-        </RelativeLayout>
+                <LinearLayout
+                    android:id="@+id/layoutEditar"
+                    android:layout_width="match_parent"
+                    android:layout_height="105dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
 
+                    <LinearLayout
+                        android:layout_width="122dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:weightSum="1">
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/nombreProdInput"
-            android:layout_below="@+id/layoutEditar">
+                        <android.support.design.widget.CheckableImageButton
+                            android:id="@+id/imagenProducto"
+                            android:layout_width="121dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8"
+                            android:src="@drawable/default_product" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:hint="Nombre producto"
-                android:ems="10"
-                android:id="@+id/editTextNombreProd"
-                android:drawableLeft="@drawable/store"/>
-        </android.support.design.widget.TextInputLayout>
+                        <TextView
+                            android:id="@+id/textView2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="@string/image"
+                            android:textAlignment="center" />
 
-    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-        android:id="@+id/spinnerCatProd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Categorias"
-        android:textColorHint="#05ab9a"
-        app:met_floatingLabel="highlight"
-        android:layout_below="@+id/nombreProdInput"/>
+                    </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/PrecioVentInput"
-        android:layout_below="@+id/spinnerCatProd">
+                </LinearLayout>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Precio de venta"
-            android:ems="10"
-            android:id="@+id/editTextPrecioVentProd"
-            android:drawableLeft="@drawable/pesos"/>
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/PrecioCompInput"
-        android:layout_below="@+id/PrecioVentInput">
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:hint="Precio de compra"
-            android:ems="10"
-            android:id="@+id/editTextPrecioCompProd"
-            android:drawableLeft="@drawable/pesos"/>
-    </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/CantidadInput"
-            android:layout_below="@+id/PrecioCompInput">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:hint="Cantidad"
-                android:ems="10"
-                android:id="@+id/numberCantidadProd"
-                android:drawableLeft="@drawable/pound"/>
-        </android.support.design.widget.TextInputLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layoutCodigoBarras"
-                android:layout_below="@id/CantidadInput">
-
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="#########"
-                    android:id="@+id/textViewCodigoBarras"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#999"
-                    android:background="@drawable/backwithborder"/>
+                    android:layout_weight="0.1"
+                    android:orientation="vertical"
+                    android:weightSum="0.7">
 
-                <android.support.design.widget.CheckableImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/barcode"
-                    android:id="@+id/scan_button"
-                    android:layout_alignParentRight="true"
-                    />
-            </RelativeLayout>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/nombreProdInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/layoutFechaVencimiento"
-                android:layout_below="@id/layoutCodigoBarras">
+                        <EditText
+                            android:id="@+id/editTextNombreProd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/store"
+                            android:ems="10"
+                            android:hint="@string/product_name"
+                            android:inputType="text" />
+                    </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textViewFechaVenc"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textColor="#999"
-                    android:background="@drawable/backwithborder"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/CantidadInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
 
-                <android.support.design.widget.CheckableImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/calendar"
-                    android:id="@+id/btnCalendar"
-                    android:layout_alignParentRight="true"
-                    />
-            </RelativeLayout>
+                        <EditText
+                            android:id="@+id/numberCantidadProd"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/pound"
+                            android:ems="10"
+                            android:hint="@string/amount"
+                            android:inputType="numberDecimal" />
+                    </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:text="Agregar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonAddProduct"
-                android:layout_below="@id/layoutFechaVencimiento"/>
+                    <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
+                        android:id="@+id/spinnerCatProd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:text="@string/categories"
+                        android:textColorHint="#05ab9a"
+                        app:met_floatingLabel="highlight" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.2"
+                            android:text="@string/prices"
+                            android:textAlignment="center" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal"
+                            android:weightSum="1">
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/PrecioVentInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5">
+
+                                <EditText
+                                    android:id="@+id/editTextPrecioVentProd"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="@string/sell_price"
+                                    android:inputType="numberDecimal" />
+                            </android.support.design.widget.TextInputLayout>
+
+                            <android.support.design.widget.TextInputLayout
+                                android:id="@+id/PrecioCompInput"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <EditText
+                                    android:id="@+id/editTextPrecioCompProd"
+                                    android:layout_width="179dp"
+                                    android:layout_height="wrap_content"
+                                    android:ems="10"
+                                    android:hint="@string/buy_price"
+                                    android:inputType="numberDecimal" />
+                            </android.support.design.widget.TextInputLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layoutFechaVencimiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
+
+                        <TextView
+                            android:id="@+id/textViewFechaVenc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:background="@drawable/backwithborder"
+                            android:gravity="center"
+                            android:textColor="#999"
+                            android:textStyle="bold" />
+
+                        <android.support.design.widget.CheckableImageButton
+                            android:id="@+id/btnCalendar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/calendar" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/layoutCodigoBarras"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.1">
+
+                        <TextView
+                            android:id="@+id/textViewCodigoBarras"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentLeft="true"
+                            android:background="@drawable/backwithborder"
+                            android:gravity="center"
+                            android:text="#########"
+                            android:textColor="#999"
+                            android:textStyle="bold" />
+
+                        <android.support.design.widget.CheckableImageButton
+                            android:id="@+id/scan_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:src="@drawable/barcode" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/buttonAddProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add" />
+
+            </LinearLayout>
+
 
         </RelativeLayout>
     </ScrollView>

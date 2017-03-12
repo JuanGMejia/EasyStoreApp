@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TiendaFácil</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="add_product">Agregar Producto</string>
+    <string name="product_name">Nombre del producto</string>
+    <string name="categories">Categoría</string>
+    <string name="sell_price">Precio de venta</string>
+    <string name="buy_price">Precio de compra</string>
+    <string name="amount">Cantidad</string>
+    <string name="add">Agregar</string>
+    <string name="image">Imagen</string>
+    <string name="prices">Precios</string>
+</resources>
