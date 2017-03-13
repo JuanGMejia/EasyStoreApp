@@ -3,6 +3,8 @@
     <!-- google's material design colours from
     http://www.google.com/design/spec/style/color.html#color-ui-color-palette -->
     <!--reds-->
+    <color name="fondo">#007DAD</color>
+    <color name="acento">#00a1d7</color>
     <array name="reds">
         <item>@color/md_red_500</item>
         <item>@color/md_red_50</item>

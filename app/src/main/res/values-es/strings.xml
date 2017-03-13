@@ -12,4 +12,6 @@
     <string name="add">Agregar</string>
     <string name="image">Imagen</string>
     <string name="prices">Precios</string>
+    <string name="barcode">Código de barras</string>
+    <string name="expiration_date">Vencimiento</string>
 </resources>
