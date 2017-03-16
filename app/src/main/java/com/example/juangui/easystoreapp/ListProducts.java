@@ -1,8 +1,18 @@
 package com.example.juangui.easystoreapp;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,28 +20,119 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Created by Juan Gui on 16/02/2017.
  */
 
 public class ListProducts extends Fragment{
-    View rootView;
-    GridView grid;
-    ArrayList<String> name = new ArrayList<String>();
-    ArrayList<Integer> imageId = new ArrayList<>();
+    private View rootView;
+    private GridView grid;
+    private ArrayList<Producto> detallesProductosTmp;
+    private ArrayList<Producto> detallesProductos;
+    private ArrayList<String> nombreProdutoTmp;
+    private ArrayList<String> nombreProducto;
+    private ArrayList<Bitmap> imageId;
+    private FBConnection fbDatabase;
+    private FBConnection fbStorage;
+    private Object productosObject[];
+    private HashMap productos;
+    final long ONE_MEGABYTE = 1024 * 1024;
+
+
+
+
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.listproducts_fragment,container,false);
         super.onCreate(savedInstanceState);
-        imageId.add(R.drawable.lechealqueria);
-        imageId.add(R.drawable.add);
-        name.add("Leche Alqueria");
-        name.add("");
-        CustomGrid adapter = new CustomGrid(rootView.getContext(), name, imageId);
+        final ProgressDialog progress = ProgressDialog.show(ListProducts.super.getActivity(), "Listando Productos",
+                "Espera un momento...", true);
+        fbDatabase = new FBConnection();
+        fbStorage=new FBConnection();
+        detallesProductosTmp = new ArrayList<Producto>();
+        detallesProductos = new ArrayList<Producto>();
+        nombreProdutoTmp = new ArrayList<String>();
+        nombreProducto = new ArrayList<>();
+        imageId = new ArrayList<>();
+
+        try {
+            listarProductos(progress);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return rootView;
+    }
+
+
+    public void lanzarAddProduct(View v){
+        Intent iniciarAddProduct= new Intent(v.getContext(),AddProduct.class);
+        startActivity(iniciarAddProduct);
+    }
+
+    public void listarProductos(final ProgressDialog progress) throws InterruptedException {
+
+        fbDatabase.getDatabase("EasyStore");
+        fbStorage.getStorage();
+        fbDatabase.myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String nombretmp;
+                productos = (HashMap) dataSnapshot.child("Productos").getValue();
+                productosObject = productos.keySet().toArray();
+                for(int i=0;i<productos.size();i++){
+                    detallesProductosTmp.add(new Producto(productosObject[i].toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("Categoria").getValue().toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("Nombre").getValue().toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("Cantidad").getValue().toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("PrecioC").getValue().toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("PrecioV").getValue().toString(),dataSnapshot.child("Productos").child(productosObject[i].toString()).child("FechaV").getValue().toString()));
+                    nombreProdutoTmp.add(detallesProductosTmp.get(i).getNombre());
+                }
+
+                for(int i=0;i<nombreProdutoTmp.size();i++) {
+                    final int finalI = i;
+                    StorageReference islandRef = fbStorage.myRefStorage.child("Images/" + nombreProdutoTmp.get(i) + "/Foto.jpg");
+                    islandRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                        @Override
+                        public void onSuccess(byte[] bytes) {
+                            nombreProducto.add(nombreProdutoTmp.get(finalI));
+                            detallesProductos.add(detallesProductosTmp.get(finalI));
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            imageId.add(bitmap);
+                            if(nombreProdutoTmp.size()==imageId.size()){
+                                pintar();
+                                progress.dismiss();
+                            }
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
+    }
+
+    public void pintar(){
+        Bitmap AddIcon = BitmapFactory.decodeResource(getResources(), R.drawable.add);
+        imageId.add(AddIcon);
+        nombreProducto.add("");
+        CustomGrid adapter = new CustomGrid(rootView.getContext(), nombreProducto, imageId);
         grid=(GridView)rootView.findViewById(R.id.grid);
         grid.setAdapter(adapter);
         grid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -42,18 +143,16 @@ public class ListProducts extends Fragment{
                 if(position==imageId.size()-1){
                     lanzarAddProduct(rootView);
                 }
-                Toast.makeText(rootView.getContext(), "You Clicked at " +name.get(position), Toast.LENGTH_SHORT).show();
-
+                else{
+                    FragmentManager fm = getFragmentManager();
+                    DetailProductFragment dialogFragment = new DetailProductFragment ();
+                    dialogFragment.setProducto(detallesProductos.get(position));
+                    dialogFragment.setImagenProducto(imageId.get(position));
+                    dialogFragment.show(fm, "Sample Fragment");
+                }
             }
         });
-
-        return rootView;
     }
 
-
-    public void lanzarAddProduct(View v){
-        Intent iniciarAddProduct= new Intent(v.getContext(),AddProduct.class);
-        startActivity(iniciarAddProduct);
-    }
 
 }

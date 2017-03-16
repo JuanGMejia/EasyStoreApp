@@ -1,6 +1,8 @@
 package com.example.juangui.easystoreapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +19,7 @@ public class CustomGrid extends BaseAdapter{
     private Context mContext;
 
     private ArrayList<String> web = new ArrayList<String>();
-    private ArrayList<Integer> Imageid = new ArrayList<>();
+    private ArrayList<Bitmap> Imageid = new ArrayList<>();
 
     public CustomGrid(Context c, ArrayList web, ArrayList Imageid ) {
         mContext = c;
@@ -57,7 +59,7 @@ public class CustomGrid extends BaseAdapter{
             TextView textView = (TextView) grid.findViewById(R.id.grid_text);
             ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
             textView.setText(web.get(position));
-            imageView.setImageResource(Imageid.get(position));
+            imageView.setImageBitmap(Imageid.get(position));
         } else {
             grid = (View) convertView;
         }

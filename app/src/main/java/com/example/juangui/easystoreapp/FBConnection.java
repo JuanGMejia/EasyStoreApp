@@ -16,8 +16,9 @@ import java.util.HashMap;
 
 public class FBConnection{
     private FirebaseStorage storage = FirebaseStorage.getInstance();
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    StorageReference myRefStorage;
 
     public FBConnection() {
     }
@@ -27,6 +28,7 @@ public class FBConnection{
     }
 
     public FirebaseStorage getStorage() {
+        myRefStorage= storage.getReferenceFromUrl("gs://easystoreapp-84625.appspot.com");
         return storage;
     }
 

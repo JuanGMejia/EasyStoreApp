@@ -83,11 +83,11 @@ public class AddProduct extends AppCompatActivity implements View.OnClickListene
     private Button agregar;
 
 
-    //Variable para el produto
+    //Variable para el producto
     private Producto producto;
-    ArrayAdapter<String> adaptador;
-    ArrayList<String> categoriasArray;
-    Object categoriasObject[];
+    private ArrayAdapter<String> adaptador;
+    private ArrayList<String> categoriasArray;
+    private Object categoriasObject[];
 
     //Variable para el codigo de barras del producto
     private ScanProductBarCode scanProductBarCode;
