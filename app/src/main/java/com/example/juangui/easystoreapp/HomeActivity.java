@@ -20,7 +20,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -79,6 +81,9 @@ public class HomeActivity extends AppCompatActivity {
             case android.R.id.home:
                 drawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            case R.id.cerrar_sesion:
+                logout(getCurrentFocus());
+                break;
             default:
                 break;
         }
@@ -149,5 +154,17 @@ public class HomeActivity extends AppCompatActivity {
         transactionSell.replace(R.id.fragment_container, sellfragment);
         transactionSell.addToBackStack(null);
         transactionSell.commit();
+    }
+
+    private void iniciarLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    public void logout(View view) {
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+        iniciarLogin();
     }
 }

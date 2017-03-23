@@ -14,4 +14,7 @@
     <string name="prices">Prices</string>
     <string name="barcode">Bar code</string>
     <string name="expiration_date">Expiration Date</string>
+    <string name="facebook_app_id">278666209241386</string>
+    <string name="Logout">Logout</string>
+    <string name="error_login">LOGIN ERROR</string>
 </resources>

@@ -60,7 +60,7 @@ public class ListProducts extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView=inflater.inflate(R.layout.listproducts_fragment,container,false);
         super.onCreate(savedInstanceState);
-        final ProgressDialog progress = ProgressDialog.show(ListProducts.super.getActivity(), "Listando Productos",
+        final ProgressDialog progress = ProgressDialog.show(rootView.getContext(), "Listando Productos",
                 "Espera un momento...", true);
         fbDatabase = new FBConnection();
         fbStorage=new FBConnection();
@@ -129,7 +129,7 @@ public class ListProducts extends Fragment{
     }
 
     public void pintar(){
-        Bitmap AddIcon = BitmapFactory.decodeResource(getResources(), R.drawable.add);
+        Bitmap AddIcon = BitmapFactory.decodeResource(rootView.getResources(), R.drawable.add);
         imageId.add(AddIcon);
         nombreProducto.add("");
         CustomGrid adapter = new CustomGrid(rootView.getContext(), nombreProducto, imageId);
