@@ -2,25 +2,16 @@ package com.example.juangui.easystoreapp;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -29,14 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.OptionalPendingResult;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -44,18 +29,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
-
-import static com.google.android.gms.measurement.internal.zzl.api;
-
-/**
- * Created by Juan Gui on 21/03/2017.
- */
 
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener{
 
@@ -72,6 +46,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context=this;
@@ -81,9 +56,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         signInButton.setSize(SignInButton.SIZE_WIDE);
         signInButton.setColorScheme(SignInButton.COLOR_DARK);
         signInButton.setOnClickListener(this);
-
         callbackManager = CallbackManager.Factory.create();
-
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList("email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -119,7 +92,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void IniciarActividadPrincipal() {
         Intent intent= new Intent(this,HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("isgoogle",isgoogle);
         startActivity(intent);
     }
 
@@ -141,19 +113,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             }
         });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(isgoogle){
-            if(requestCode==SIGN_IN_CODE){
-                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-                handleSignInResult(result);
-            }
-        }else {
-            callbackManager.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -183,10 +142,22 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(isgoogle){
+            if(requestCode==SIGN_IN_CODE){
+                GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                handleSignInResult(result);
+            }
+        }else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         firebaseAuth.addAuthStateListener(firebaseAuthListener);
-
     }
 
     @Override
