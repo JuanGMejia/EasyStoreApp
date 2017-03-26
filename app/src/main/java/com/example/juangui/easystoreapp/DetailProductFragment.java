@@ -14,7 +14,7 @@ import android.widget.TextView;
  * Created by Juan Gui on 16/03/2017.
  */
 
-public class DetailProductFragment extends DialogFragment{
+public class DetailProductFragment extends DialogFragment {
     Producto producto;
     Bitmap imagenProducto;
     ImageView imagen;
@@ -26,11 +26,8 @@ public class DetailProductFragment extends DialogFragment{
     TextView codigoBarras;
 
 
-
-
-
-
-    public DetailProductFragment(){}
+    public DetailProductFragment() {
+    }
 
     public void setProducto(Producto producto) {
         this.producto = producto;

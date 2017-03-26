@@ -1,7 +1,5 @@
 package com.example.juangui.easystoreapp;
 
-import java.util.Date;
-
 /**
  * Created by Juan Gui on 23/02/2017.
  */
@@ -15,7 +13,7 @@ public class Producto {
     private String precioVenta;
     private String fechaVencimiento;
 
-    public Producto(){
+    public Producto() {
 
     }
 
@@ -85,11 +83,11 @@ public class Producto {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public boolean verificarCampos(){
-        if(!this.codigoBarras.equals("#########") && !this.nombre.equals("") && !this.categoria.equals("") && !this.precioCompra.equals("")
-                && !this.precioVenta.equals("") && !this.fechaVencimiento.equals("")){
+    public boolean verificarCampos() {
+        if (!this.codigoBarras.equals("#########") && !this.nombre.equals("") && !this.categoria.equals("") && !this.precioCompra.equals("")
+                && !this.precioVenta.equals("") && !this.fechaVencimiento.equals("")) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
